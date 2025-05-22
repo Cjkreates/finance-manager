@@ -12,14 +12,12 @@
             color: #333;
         }
         canvas {
-  
-          width: 100% !important;
-          height: auto !important;
-          max-width: 700px; /* max width to keep it reasonable */
-          margin: 1rem 0;
-          display: block;
+            width: 100% !important;
+            height: auto !important;
+            max-width: 700px; /* max width to keep it reasonable */
+            margin: 1rem 0;
+            display: block;
         }
-
         header {
             background: #34495e;
             color: white;
@@ -71,20 +69,20 @@
 <body>
     <header>
         <h1>Finance Tracker</h1>
-        <nav>
+        <nav aria-label="Primary Navigation">
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'dashboard' %}">Dashboard</a>
             <a href="{% url 'income_list' %}">Income</a>
             <a href="{% url 'add_income' %}">Add Income</a>
             <a href="{% url 'expense_list' %}">Expenses</a>
             <a href="{% url 'add_expense' %}">Add Expense</a>
-            
+
             <div class="user-info">
                 {% if user.is_authenticated %}
-                    Hello, {{ user.username }}! | 
+                    Hello, {{ user.username }}! |
                     <a href="{% url 'logout' %}">Logout</a>
                 {% else %}
-                    <a href="{% url 'login' %}">Login</a> | 
+                    <a href="{% url 'login' %}">Login</a> |
                     <a href="{% url 'register' %}">Register</a>
                 {% endif %}
             </div>

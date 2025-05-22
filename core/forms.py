@@ -16,6 +16,8 @@ class expenseform(forms.ModelForm):
 		fields = ['category','amount','date','description']
 
 class RegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
