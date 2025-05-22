@@ -1,0 +1,102 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Dashboard - Finance Tracker{% endblock %}
+
+{% block content %}
+<h2>Dashboard</h2>
+
+<p><strong>Total Income:</strong> ${{ total_income }}</p>
+<p><strong>Total Expense:</strong> ${{ total_expense }}</p>
+<p><strong>Balance:</strong> ${{ balance }}</p>
+
+<hr/>
+
+<h3>Expense Breakdown by Category</h3>
+<div class="chart-container">
+    <canvas id="expensePieChart"></canvas>
+</div>
+
+<h3>Monthly Income vs Expense</h3>
+<div class="chart-container">
+    <canvas id="incomeExpenseBarChart"></canvas>
+</div>
+
+<style>
+    .chart-container {
+        max-width: 700px;
+        margin: 2rem auto;
+        padding: 1rem;
+        background: #f9f9f9;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    canvas {
+        width: 100% !important;
+        height: 400px !important; /* Ensures stable height */
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const pieCtx = document.getElementById('expensePieChart').getContext('2d');
+    const pieChart = new Chart(pieCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ expense_categories|safe }},
+            datasets: [{
+                label: 'Expense by Category',
+                data: {{ expense_totals|safe }},
+                backgroundColor: [
+                    '#FF6384', '#36A2EB', '#FFCE56',
+                    '#4BC0C0', '#9966FF', '#FF9F40'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    const barCtx = document.getElementById('incomeExpenseBarChart').getContext('2d');
+    const barChart = new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ months|safe }},
+            datasets: [
+                {
+                    label: 'Income',
+                    data: {{ income_totals|safe }},
+                    backgroundColor: '#36A2EB'
+                },
+                {
+                    label: 'Expense',
+                    data: {{ expense_totals_monthly|safe }},
+                    backgroundColor: '#FF6384'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

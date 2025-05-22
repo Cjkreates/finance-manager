@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Finance Tracker{% endblock %}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        canvas {
+  
+          width: 100% !important;
+          height: auto !important;
+          max-width: 700px; /* max width to keep it reasonable */
+          margin: 1rem 0;
+          display: block;
+        }
+
+        header {
+            background: #34495e;
+            color: white;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        nav {
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #1abc9c;
+        }
+        .user-info {
+            margin-left: auto;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        footer {
+            background: #ecf0f1;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Finance Tracker</h1>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'income_list' %}">Income</a>
+            <a href="{% url 'add_income' %}">Add Income</a>
+            <a href="{% url 'expense_list' %}">Expenses</a>
+            <a href="{% url 'add_expense' %}">Add Expense</a>
+            
+            <div class="user-info">
+                {% if user.is_authenticated %}
+                    Hello, {{ user.username }}! | 
+                    <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a> | 
+                    <a href="{% url 'register' %}">Register</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        &copy; {% now "Y" %} Finance Tracker
+    </footer>
+</body>
+</html>

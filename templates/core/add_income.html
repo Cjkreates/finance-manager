@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Add Income</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 480px;
+            background: white;
+            margin: 3rem auto;
+            padding: 2rem 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 1.5rem;
+            color: #34495e;
+            font-weight: 700;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        form p {
+            margin-bottom: 1rem;
+        }
+        label {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            display: block;
+            color: #34495e;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            border: 1.5px solid #bdc3c7;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #1abc9c;
+            outline: none;
+            box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+        }
+        button {
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            margin-top: 1.2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: flex-start;
+        }
+        button:hover {
+            background-color: #16a085;
+        }
+        a {
+            display: inline-block;
+            margin-top: 1.8rem;
+            color: #1abc9c;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #16a085;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>➕ Add Income</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Income</button>
+        </form>
+        <a href="{% url 'income_list' %}">Back to Income List</a>
+    </div>
+</body>
+</html>

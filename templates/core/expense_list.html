@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+{% block title %}Expense Records{% endblock %}
+{% block content %}
+<h2>Expense Records</h2>
+
+<form method="get">
+    <input type="text" name="q" placeholder="Search expenses..." value="{{ request.GET.q }}">
+    <input type="date" name="date" value="{{ request.GET.date }}">
+    <button type="submit">Search</button>
+</form>
+
+<ul>
+    {% for expense in expenses %}
+        <li>{{ expense.date }} - {{ expense.category }} - {{ expense.amount }}<br>
+            <small>{{ expense.description }}</small>
+        </li>
+    {% empty %}
+        <li>No expense records found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

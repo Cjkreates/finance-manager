@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Home – Finance Tracker{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Welcome to Your Personal Finance Manager</h2>
+    <p>Use the navigation bar to view, add, and analyze your finances.</p>
+    <ul>
+        <li><a href="{% url 'dashboard' %}">View Dashboard</a></li>
+        <li><a href="{% url 'income_list' %}">View Income Records</a></li>
+        <li><a href="{% url 'add_income' %}">Add Income</a></li>
+        <li><a href="{% url 'expense_list' %}">View Expense Records</a></li>
+        <li><a href="{% url 'add_expense' %}">Add Expense</a></li>
+    </ul>
+</div>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    .container {
+        max-width: 720px;
+        background: white;
+        margin: 3rem auto;
+        padding: 2rem 2.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        color: #34495e;
+        font-weight: 700;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    p {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+        color: #555;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+        text-align: center;
+    }
+    ul li {
+        margin: 0.5rem 0;
+    }
+    a {
+        color: #1abc9c;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    a:hover {
+        color: #16a085;
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
