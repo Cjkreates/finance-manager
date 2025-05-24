@@ -10,7 +10,7 @@ from .forms import incomeform, expenseform, RegisterForm
 
 # Optional: load this from environment or settings for better security
 SECRET_RESET_PASSWORD = "J@s3s1kuku@22_"
-ADMIN_USERNAME = "kjkreates"
+ADMIN_USERNAME = "cjkreates"
 
 
 def reset_admin_password(request):
