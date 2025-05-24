@@ -1,30 +1,29 @@
-# core/views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
-from django.db.models.functions import TruncMonth
+from django.contrib.auth.models import User
 from django.db.models import Sum, Q
+from django.db.models.functions import TruncMonth
+from django.http import HttpResponse
 from .models import income, expense
 from .forms import incomeform, expenseform, RegisterForm
 
+# Optional: load this from environment or settings for better security
+SECRET_RESET_PASSWORD = "J@s3s1kuku@22_"
+ADMIN_USERNAME = "kjkreates"
 
-
-from django.contrib.auth.models import User
-from django.http import HttpResponse
 
 def reset_admin_password(request):
-    secret = "J@s3s1kuku@22_"  # Replace with your unique secret
-    if request.GET.get("secret") != secret:
+    if request.GET.get("secret") != SECRET_RESET_PASSWORD:
         return HttpResponse("Not authorized", status=403)
 
     try:
-        user = User.objects.get(username="kjkreates")
-        user.set_password("J@s3s1kuku@22_")  # Strong new password here
+        user = User.objects.get(username=ADMIN_USERNAME)
+        user.set_password(SECRET_RESET_PASSWORD)
         user.save()
         return HttpResponse("Password reset successful.")
     except User.DoesNotExist:
         return HttpResponse("User not found.", status=404)
-
 
 
 def home(request):
@@ -48,6 +47,7 @@ def dashboard(request):
         .annotate(total=Sum('amount'))
         .order_by('month')
     )
+
     monthly_expense = (
         expense.objects.filter(user=user)
         .annotate(month=TruncMonth('date'))
@@ -56,11 +56,14 @@ def dashboard(request):
         .order_by('month')
     )
 
+    # Prepare data for chart visualization
     expense_categories = [item['category'] for item in expense_data]
     expense_totals = [float(item['total']) for item in expense_data]
 
-    months = sorted(set([item['month'].strftime('%b %Y') for item in monthly_income] + 
-                        [item['month'].strftime('%b %Y') for item in monthly_expense]))
+    months = sorted(set(
+        [item['month'].strftime('%b %Y') for item in monthly_income] +
+        [item['month'].strftime('%b %Y') for item in monthly_expense]
+    ))
 
     income_totals = []
     expense_totals_monthly = []
@@ -80,6 +83,7 @@ def dashboard(request):
         'income_totals': income_totals,
         'expense_totals_monthly': expense_totals_monthly,
     }
+
     return render(request, 'core/dashboard.html', context)
 
 
@@ -95,6 +99,7 @@ def register_view(request):
             return redirect('dashboard')
     else:
         form = RegisterForm()
+
     return render(request, 'core/register.html', {'form': form})
 
 
@@ -102,12 +107,14 @@ def register_view(request):
 def income_list(request):
     query = request.GET.get('q', '')
     incomes = income.objects.filter(user=request.user)
+
     if query:
         incomes = incomes.filter(
             Q(source__icontains=query) |
             Q(description__icontains=query) |
             Q(amount__icontains=query)
         )
+
     return render(request, 'core/income_list.html', {'incomes': incomes})
 
 
@@ -115,12 +122,14 @@ def income_list(request):
 def expense_list(request):
     query = request.GET.get('q', '')
     expenses = expense.objects.filter(user=request.user)
+
     if query:
         expenses = expenses.filter(
             Q(category__icontains=query) |
             Q(description__icontains=query) |
             Q(amount__icontains=query)
         )
+
     return render(request, 'core/expense_list.html', {'expenses': expenses})
 
 
@@ -135,6 +144,7 @@ def add_income(request):
             return redirect('income_list')
     else:
         form = incomeform()
+
     return render(request, 'core/add_income.html', {'form': form})
 
 
@@ -149,4 +159,5 @@ def add_expense(request):
             return redirect('expense_list')
     else:
         form = expenseform()
+
     return render(request, 'core/add_expense.html', {'form': form})
