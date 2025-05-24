@@ -3,6 +3,10 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    from your_app_name.views import reset_admin_password
+
+    path("reset-admin-password/", reset_admin_password),
+
     path('', views.home, name='home'),  # Homepage or redirect to dashboard if logged in
     path("reset-admin-password/", reset_admin_password),
 
