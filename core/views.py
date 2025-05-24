@@ -7,6 +7,20 @@ from django.db.models.functions import TruncMonth
 from django.http import HttpResponse
 from .models import income, expense
 from .forms import incomeform, expenseform, RegisterForm
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+
+def create_admin_user(request):
+    if User.objects.filter(username="kjkreates").exists():
+        return HttpResponse("Admin user already exists.")
+
+    user = User.objects.create_superuser(
+        username="kjkreates",
+        email="",
+        password="J@s3s1kuku@22_"
+    )
+    return HttpResponse("Admin user created successfully.")
+
 
 # Optional: load this from environment or settings for better security
 SECRET_RESET_PASSWORD = "J@s3s1kuku@22_"
