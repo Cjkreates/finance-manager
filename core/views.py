@@ -7,6 +7,22 @@ from django.db.models import Sum, Q
 from .models import income, expense
 from .forms import incomeform, expenseform, RegisterForm
 
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+
+def reset_admin_password(request):
+    if request.GET.get("secret") != "your-secret-code":  # Simple protection
+        return HttpResponse("Not authorized", status=403)
+
+    try:
+        user = User.objects.get(username="kjkreates")
+        user.set_password("newsecurepassword123")  # Replace with your new password
+        user.save()
+        return HttpResponse("Password reset successful.")
+    except User.DoesNotExist:
+        return HttpResponse("User not found.", status=404)
+
+
 def home(request):
     return render(request, 'core/home.html')
 
