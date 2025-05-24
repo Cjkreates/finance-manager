@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 
 def create_admin_user(request):
-    if User.objects.filter(username="kjkreates").exists():
+    if User.objects.filter(username="cjkreates").exists():
         return HttpResponse("Admin user already exists.")
 
     user = User.objects.create_superuser(
