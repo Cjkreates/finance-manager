@@ -7,27 +7,33 @@ from django.db.models.functions import TruncMonth
 from django.http import HttpResponse
 from .models import income, expense
 from .forms import incomeform, expenseform, RegisterForm
-from django.contrib.auth.models import User
-from django.http import HttpResponse
+
+# Config - ideally move to settings or env variables for security
+ADMIN_USERNAME = "cjkreates"
+ADMIN_PASSWORD = "J@s3s1kuku@22_"
+SECRET_RESET_PASSWORD = ADMIN_PASSWORD
+
 
 def create_admin_user(request):
-    if User.objects.filter(username="cjkreates").exists():
+    """
+    Creates a superuser with a fixed username and password.
+    Only creates if user doesn't already exist.
+    """
+    if User.objects.filter(username=ADMIN_USERNAME).exists():
         return HttpResponse("Admin user already exists.")
 
-    user = User.objects.create_superuser(
-        username="cjkreates",
+    User.objects.create_superuser(
+        username=ADMIN_USERNAME,
         email="",
-        password="J@s3s1kuku@22_"
+        password=ADMIN_PASSWORD,
     )
     return HttpResponse("Admin user created successfully.")
 
 
-# Optional: load this from environment or settings for better security
-SECRET_RESET_PASSWORD = "J@s3s1kuku@22_"
-ADMIN_USERNAME = "cjkreates"
-
-
 def reset_admin_password(request):
+    """
+    Resets the admin user's password if the correct secret is provided as GET param.
+    """
     if request.GET.get("secret") != SECRET_RESET_PASSWORD:
         return HttpResponse("Not authorized", status=403)
 
@@ -70,7 +76,7 @@ def dashboard(request):
         .order_by('month')
     )
 
-    # Prepare data for chart visualization
+    # Prepare chart data
     expense_categories = [item['category'] for item in expense_data]
     expense_totals = [float(item['total']) for item in expense_data]
 
