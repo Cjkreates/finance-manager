@@ -4,7 +4,8 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', views.home, name='home'),  # Homepage or redirect to dashboard if logged in
-    
+    path("reset-admin-password/", reset_admin_password),
+
     # Income URLs
     path('incomes/', views.income_list, name='income_list'),
     path('add-income/', views.add_income, name='add_income'),
