@@ -1,12 +1,10 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import reset_admin_password  # Move this import to the top
+from .views import reset_admin_password  # Good to keep import at the top
 
 urlpatterns = [
-    path("create-admin/", views.create_admin_user, name="create_admin"),
-
-    path("create-admin/", views.create_admin_user),
+    path("create-admin/", views.create_admin_user, name="create_admin"),  # Only one needed
 
     path("reset-admin-password/", reset_admin_password, name='reset_admin_password'),
 
