@@ -1,18 +1,18 @@
 from django import forms
-from .models import income,expense
+from .models import Income,Expense
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 
-class incomeform(forms.ModelForm):
+class Incomeform(forms.ModelForm):
 	class Meta:
-		model = income
+		model = Income
 		fields = ['source','amount','date','description']
 
 
-class expenseform(forms.ModelForm):
+class Expenseform(forms.ModelForm):
 	class Meta:
-		model = expense
+		model = Expense
 		fields = ['category','amount','date','description']
 
 class RegisterForm(UserCreationForm):
