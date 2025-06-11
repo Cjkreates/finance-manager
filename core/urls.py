@@ -1,7 +1,8 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import reset_admin_password  
+from .views import reset_admin_password  # Good to keep import at the top
+
 urlpatterns = [
 
     

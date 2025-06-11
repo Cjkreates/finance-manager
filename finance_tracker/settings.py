@@ -2,6 +2,11 @@ import os
 from pathlib import Path
 import dj_database_url
 
+# Config - ideally move to settings or env variables for security
+ADMIN_USERNAME = "cjkreates"
+ADMIN_PASSWORD = "J@s3s1kuku@22_"
+SECRET_RESET_PASSWORD = ADMIN_PASSWORD
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-)i0abusibv^dmv2so4w49ejm-up-9&bws29ey2a0^xxm4ey0wd')
