@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 
-class income(models.Model):
+class Income(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 	source=models.CharField(max_length=100)
@@ -17,7 +17,7 @@ class income(models.Model):
 		return f"{self.source} - {self.amount}"
 
 
-class expense(models.Model):
+class Expense(models.Model):
 	  user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 	  category=models.CharField(max_length=100)
