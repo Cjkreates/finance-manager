@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from . models import income,expense
+from . models import Income,Expense
 
-admin.site.register(income)
-admin.site.register(expense)
+admin.site.register(Income)
+admin.site.register(Expense)
