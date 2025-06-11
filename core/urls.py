@@ -1,9 +1,21 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import reset_admin_password  # Good to keep import at the top
-
+from .views import reset_admin_password  
 urlpatterns = [
+
+    
+
+    path('income/edit/<int:pk>/', views.edit_income, name='edit_income'),
+    path('income/delete/<int:pk>/', views.delete_income, name='delete_income'),
+    path('expense/edit/<int:pk>/', views.edit_expense, name='edit_expense'),
+    path('expense/delete/<int:pk>/', views.delete_expense, name='delete_expense'),
+
+    path('income/cbv/edit/<int:pk>/', views.IncomeUpdateView.as_view(), name='cbv_edit_income'),
+    path('income/cbv/delete/<int:pk>/', views.IncomeDeleteView.as_view(), name='cbv_delete_income'),
+
+
+
     path("create-admin/", views.create_admin_user, name="create_admin"),  # Only one needed
 
     path("reset-admin-password/", reset_admin_password, name='reset_admin_password'),
